@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from Cogs.mycommand import Greetings
+
 my_intents = discord.Intents.default()
 my_intents.message_content = True
 
@@ -15,6 +17,7 @@ my_bot = commands.Bot(
     intents=my_intents,
 )
 
+
 #Prefix Command
 @my_bot.command(name="helloworld")
 async def hello_world(ctx):
@@ -26,8 +29,8 @@ async def byeworld(interaction: discord.Interaction):
     await interaction.response.send_message("Bye World!")
 
 #Hybrid Command: Both slash and prefix
-@my_bot.hybrid_command(name="greet")
-async def greet(ctx):
+# @my_bot.hybrid_command(name="greet")
+# async def greet(ctx):
     #await ctx.send("Greetings!")
     #await ctx.reply(ctx.guild.name)
     #await ctx.send(ctx.guild.id)
@@ -36,8 +39,8 @@ async def greet(ctx):
     #await ctx.send(ctx.author.display_name + " Greetings!")
     #await ctx.send(ctx.author.global_name)
     #await ctx.send(ctx.author.id)
-    user_id = ctx.author.id
-    await ctx.send(f"<@{user_id}> Greetings!")
+    # user_id = ctx.author.id
+    # await ctx.send(f"<@{user_id}> Greetings!")
 
 #All Channels and Text Channels Commands
 @my_bot.hybrid_command(name="allchannels")
@@ -150,13 +153,32 @@ async def guildinfo(ctx):
 ####TASK
 #HYBRID_GROUP COMMAND
 #################################
+@my_bot.hybrid_group(name="channels")
+async def channels_list(ctx):
+    pass
+
+@channels_list.command(name="text")
+async def text_channels(ctx):
+    text_channels = ctx.guild.text_channels
+    for channel in text_channels:
+        await ctx.send(f"- {channel.name} (ID: {channel.id})")
+
+####TASK
+#Command Cogs
+#What's Cogs?
+#Why use Cogs?
+#When to use Cogs?
+#################################
 
 
 @my_bot.event
 async def on_ready():
+    await my_bot.load_extension("Cogs.mycommand")
+    await my_bot.load_extension("Cogs.Api")
     await my_bot.tree.sync()
     print(f"Logged in as {my_bot.user}")
 
 
 if __name__ == "__main__":
+    # my_bot.add_cog(Greetings())
     my_bot.run(TOKEN)
