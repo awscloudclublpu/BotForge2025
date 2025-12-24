@@ -11,6 +11,7 @@ class Moderation(commands.Cog):
         pass
     
     @moderate.command(name="kick")
+    @commands.has_permissions(administrator=True)
     async def kick(self, ctx, member: discord.Member):
         """Kick a member from the server."""
         await member.kick()

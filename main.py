@@ -175,6 +175,7 @@ async def text_channels(ctx):
 async def on_ready():
     await my_bot.load_extension("Cogs.mycommand")
     await my_bot.load_extension("Cogs.Api")
+    await my_bot.load_extension("Cogs.Moderation")
     await my_bot.tree.sync()
     print(f"Logged in as {my_bot.user}")
 

@@ -18,6 +18,10 @@ class ApiCog(commands.Cog):
         return {"status": "ok"}
     async def GET_ping(self):
         return {"message": "pong"}
+    async def POST_ban_user(self, mod_id: int, user_id: int, guild_id: int):
+        guild = self.bot.get_guild(guild_id)
+        pass
+    
 class ServerAPI(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
